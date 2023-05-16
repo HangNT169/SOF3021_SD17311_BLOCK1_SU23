@@ -13,7 +13,7 @@
         <button type="submit">Search</button>
     </form>
     <br/>
-    <button><a href="">Add Student</a></button>
+    <button><a href="/sinh-vien/view-add">Add Student</a></button>
     <tr>
         <th>STT</th>
         <th>MSSV</th>
@@ -35,9 +35,9 @@
             <td>${sv.diaChi}</td>
             <td>${sv.gioiTinh}</td>
             <td>
-                <button><a href="">Detail </a></button>
-                <button><a href="">Delete </a></button>
-                <button><a href="">Update </a></button>
+                <button><a href="/sinh-vien/detail/${sv.mssv}">Detail </a></button>
+                <button><a href="/sinh-vien/delete/${sv.mssv}">Delete </a></button>
+                <button><a href="/sinh-vien/view-update/${sv.mssv}">Update </a></button>
             </td>
         </tr>
     </c:forEach>

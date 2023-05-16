@@ -1,6 +1,7 @@
 package com.poly.hangnt169.B3_CRUDListFixCung.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder // Tao ra contructor co so luong tham so tuy y
+// Neu truyen vao 1 tham so => Contructor 1 tham so...
 public class SinhVien {
 
     private String mssv;
