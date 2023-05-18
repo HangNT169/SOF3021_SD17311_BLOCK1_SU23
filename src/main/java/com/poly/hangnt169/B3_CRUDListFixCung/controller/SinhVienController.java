@@ -3,12 +3,14 @@ package com.poly.hangnt169.B3_CRUDListFixCung.controller;
 import com.poly.hangnt169.B3_CRUDListFixCung.entity.SinhVien;
 import com.poly.hangnt169.B3_CRUDListFixCung.service.SinhVienService;
 import com.poly.hangnt169.B3_CRUDListFixCung.service.impl.SinhVienServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,34 +33,51 @@ public class SinhVienController {
         return "/buoi3/sinhviens";
     }
 
+    // C1: From HTML
+//    @GetMapping("/sinh-vien/view-add")
+//    public String viewAddSV() {
+//        return "buoi3/add-sinh-vien";
+//    }
+//
+//    @PostMapping("/sinh-vien/add")
+//    public String addSinhVien(@RequestParam("mssv") String ma, @RequestParam("ten") String ten,
+//                              @RequestParam("tuoi") String tuoi, @RequestParam("diaChi") String diaChi,
+//                              @RequestParam("gioiTinh") String gt, Model model) {
+//        // B1: Khoi tao 1 Object
+//        // C1: Su dung contructor
+////        SinhVien sinhVien = new SinhVien(ma, ten, Integer.valueOf(tuoi), diaChi, Boolean.valueOf(gt));
+//        // C2: Su dung builder
+//        SinhVien sv = SinhVien.builder()
+//                .diaChi(diaChi)
+//                .gioiTinh(Boolean.valueOf(gt))
+//                .mssv(ma)
+//                .ten(ten)
+//                .tuoi(Integer.valueOf(tuoi))
+//                .build(); // <=> contrutor khong tham so
+//        // B2: Goi add trong service
+//        sinhVienService.addSinhVien(sv);
+//        //B3: Quay lai trang chu
+//        // C1: Return JSP
+////        sinhViens = sinhVienService.getAll();
+////        model.addAttribute("lists", sinhViens);
+////        return "/buoi3/sinhviens";
+//        // C2: redirect
+//        return "redirect:/sinh-vien/hien-thi";
+//    }
+
+    // C2: Spring From
     @GetMapping("/sinh-vien/view-add")
-    public String viewAddSV() {
-        return "buoi3/add-sinh-vien";
+    public String viewAdd(Model model) {
+        model.addAttribute("sv", new SinhVien());
+        return "/buoi5/add-sinh-vien";
     }
 
     @PostMapping("/sinh-vien/add")
-    public String addSinhVien(@RequestParam("mssv") String ma, @RequestParam("ten") String ten,
-                              @RequestParam("tuoi") String tuoi, @RequestParam("diaChi") String diaChi,
-                              @RequestParam("gioiTinh") String gt, Model model) {
-        // B1: Khoi tao 1 Object
-        // C1: Su dung contructor
-//        SinhVien sinhVien = new SinhVien(ma, ten, Integer.valueOf(tuoi), diaChi, Boolean.valueOf(gt));
-        // C2: Su dung builder
-        SinhVien sv = SinhVien.builder()
-                .diaChi(diaChi)
-                .gioiTinh(Boolean.valueOf(gt))
-                .mssv(ma)
-                .ten(ten)
-                .tuoi(Integer.valueOf(tuoi))
-                .build(); // <=> contrutor khong tham so
-        // B2: Goi add trong service
-        sinhVienService.addSinhVien(sv);
-        //B3: Quay lai trang chu
-        // C1: Return JSP
-//        sinhViens = sinhVienService.getAll();
-//        model.addAttribute("lists", sinhViens);
-//        return "/buoi3/sinhviens";
-        // C2: redirect
+    public String addSinhVien(@Valid @ModelAttribute("sv") SinhVien sinhVien, BindingResult result) {
+       if(result.hasErrors()){
+           return "/buoi5/add-sinh-vien";
+       }
+        sinhVienService.addSinhVien(sinhVien);
         return "redirect:/sinh-vien/hien-thi";
     }
 
